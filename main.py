@@ -3,7 +3,7 @@ from pprint import pprint
 import time
 import json
 from time import sleep
-#token = '34f4f11807efbe8c1b82a0850fa70f137c556b7221acde76b2acbf4e7d90fc485f5bd4fdd4ccb496e8e95'
+
 #url = 'https://api.vk.com/method/photos.getAll'
 #owner_id = 552934290
 
