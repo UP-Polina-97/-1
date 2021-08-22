@@ -9,10 +9,10 @@ from time import sleep
 
 ## this is function to get photo data from vk
 class VKphoto_send_to_yadisk():
-    owner_id = input("please give your id: ")
-    token_for_ya = input("please write your token for yandex: ")
+owner_id = input("please give your id: ")
+token_for_ya = input("please write your token for yandex: ")
     url = 'https://api.vk.com/method/photos.getAll'
-    token_for_vk = '34f4f11807efbe8c1b82a0850fa70f137c556b7221acde76b2acbf4e7d90fc485f5bd4fdd4ccb496e8e95'
+    token_for_vk =
     data = []
     data1 = []
 
@@ -57,6 +57,7 @@ class VKphoto_send_to_yadisk():
        uploader_url = req.json()['href']
        with open(file_path, 'rb') as file:
             files = requests.put(uploader_url, data=file)
+
        print(files)
 
 if __name__ == '__main__':
