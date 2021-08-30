@@ -72,13 +72,13 @@ if __name__ == '__main__':
     #tmp_folder = ...
     #user_id = str(input("please give your id: "))
     user_id = 552934290
-    token_for_vk = "34f4f11807efbe8c1b82a0850fa70f137c556b7221acde76b2acbf4e7d90fc485f5bd4fdd4ccb496e8e95"
+    token_for_vk =
     #user_id = str(input("please give your id: "))
 
 # information for the yandex disk, in order to send it to your disk
     #path_to_file =
     path_to_file = "photo.jpeg"
-    token = "AQAAAABXPW06AAdM1-YiAlNVtE3xk5EvzmZuI7U"
+    token =
     #token_for_yandex = input("please write your token for yandex: ")
     #uploader = VKphoto_send_to_yadisk(token)
     #result = uploader.upload(path_to_file)
