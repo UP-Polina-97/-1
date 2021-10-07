@@ -29,7 +29,7 @@ class VKphoto_send_to_yadisk():
         } #'photo_size': 1, 'extended': 1,
         res = requests.get(url_vk, params=params).json()
         rrr = res['response']['items']
-        pprint(rrr)
+        #pprint(rrr)
 
         for k in rrr:
             self.url_list.append(k['sizes'][-1]['url'])
@@ -45,17 +45,21 @@ class VKphoto_send_to_yadisk():
     def upload(self):
         url = "https://cloud-api.yandex.net:443/"
         url_extra = "v1/disk/resources/upload"
+        url_extra_folder = "v1/disk/resources"
         headers = {
                 'content-type': 'application/json',
                 'accept': 'application/json',
                 'authorization': f'OAuth {self.token}'
             }
+        req = requests.put(url, url_extra_folder, headers=headers, params={'path': 'photos'})
+        #print(req)
+        print(req.status_code)
+
+
+
         for name, urll in zip(self.name, self.url_list):
             requests.post(url + url_extra, headers=headers,
-                          params={'path': f'py44/{name}.json', 'url': urll})
-
-        #print("Фото ... загружено \n ... \nЗагрузка фото на Яндекс.Диск завершена")
-
+                          params={'path': f'photos/{name}.json', 'url': urll})
 
 if __name__ == '__main__':
     token = input("please write your token for yandex: ")
