@@ -1,21 +1,17 @@
 import requests
-from pprint import pprint
-from tqdm import tqdm
-
-import time
 import json
-from time import sleep
+from pprint import pprint
 
 
 class VKphoto_send_to_yadisk():
-    def __init__(self, token_for_vk: str, token: str): #url_list, likes_list
+    def __init__(self, token_for_vk: str, token: str):
         self.token = token
         self.token_for_vk = token_for_vk
         self.like_list = []
         self.url_list = []
         self.size = []
         self.name = []
-
+        self.for_print = []
 
     def get_photos_vk_data(self, count=5):
         url_vk = 'https://api.vk.com/method/photos.get'
@@ -26,10 +22,9 @@ class VKphoto_send_to_yadisk():
             'extended': 1,
             'count': count,
             'v': 5.131
-        } #'photo_size': 1, 'extended': 1,
+        }
         res = requests.get(url_vk, params=params).json()
         rrr = res['response']['items']
-        #pprint(rrr)
 
         for k in rrr:
             self.url_list.append(k['sizes'][-1]['url'])
@@ -40,26 +35,27 @@ class VKphoto_send_to_yadisk():
                 self.name.append(k['likes']['count'])
                 self.like_list.append(k['likes'])
 
-        #print("Получение информации о фото из ВК завершено.\n  \nНачата загрузка фото на Яндекс.Диск...")
-
     def upload(self):
         url = "https://cloud-api.yandex.net:443/"
         url_extra = "v1/disk/resources/upload"
         url_extra_folder = "v1/disk/resources"
         headers = {
-                'content-type': 'application/json',
                 'accept': 'application/json',
                 'authorization': f'OAuth {self.token}'
             }
-        req = requests.put(url, url_extra_folder, headers=headers, params={'path': 'photos'})
-        #print(req)
-        print(req.status_code)
+
+        for name, size in zip(self.name, self.size):
+            self.for_print.append({"file_name": f"{name}.jpg","size": f"{size}"})
+
+        with open('data_for_photos.json', 'w', encoding='utf-8') as json_file:
+            json.dump(self.for_print, json_file, ensure_ascii=False, indent= 4)
 
 
+        requests.put(url + url_extra_folder, headers=headers, params={'path': 'photos'})
 
         for name, urll in zip(self.name, self.url_list):
             requests.post(url + url_extra, headers=headers,
-                          params={'path': f'photos/{name}.json', 'url': urll})
+                          params={'path': f'photos/{name}.jpg', 'url': urll})
 
 if __name__ == '__main__':
     token = input("please write your token for yandex: ")
@@ -71,7 +67,3 @@ if __name__ == '__main__':
     print("Получение информации о фото из ВК завершено.\n  \nНачата загрузка фото на Яндекс.Диск...")
     uploader.upload()
     print("Фото ... загружено \n ... \nЗагрузка фото на Яндекс.Диск завершена")
-
-
-
-

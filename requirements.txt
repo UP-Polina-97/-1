@@ -1,0 +1,13 @@
+certifi
+charset-normalizer
+idna
+pip
+progress
+requests
+setuptools
+tqdm
+urllib3
+wheel
+yandex
+pprint
+json
